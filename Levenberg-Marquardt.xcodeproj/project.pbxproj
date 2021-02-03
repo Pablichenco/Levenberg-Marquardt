@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		435BF5C125CA3353002DCFD2 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 435BF5C025CA3353002DCFD2 /* main.c */; };
+		435BF5CA25CA3380002DCFD2 /* lvmrq.c in Sources */ = {isa = PBXBuildFile; fileRef = 435BF5C925CA3380002DCFD2 /* lvmrq.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,8 @@
 /* Begin PBXFileReference section */
 		435BF5BD25CA3353002DCFD2 /* Levenberg-Marquardt */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Levenberg-Marquardt"; sourceTree = BUILT_PRODUCTS_DIR; };
 		435BF5C025CA3353002DCFD2 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		435BF5C825CA337F002DCFD2 /* lvmrq.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lvmrq.h; sourceTree = "<group>"; };
+		435BF5C925CA3380002DCFD2 /* lvmrq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lvmrq.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				435BF5C025CA3353002DCFD2 /* main.c */,
+				435BF5C825CA337F002DCFD2 /* lvmrq.h */,
+				435BF5C925CA3380002DCFD2 /* lvmrq.c */,
 			);
 			path = "Levenberg-Marquardt";
 			sourceTree = "<group>";
@@ -118,6 +123,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				435BF5CA25CA3380002DCFD2 /* lvmrq.c in Sources */,
 				435BF5C125CA3353002DCFD2 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
