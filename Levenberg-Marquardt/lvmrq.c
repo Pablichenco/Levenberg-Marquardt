@@ -54,7 +54,7 @@ int levmarq(int npar, double *par, int ny, double *y, double *dysq,
         void (*grad)(double *, double *, int, void *),
         void *fdata, LMstat *lmstat)
 {
-  int x,i,j,it,nit,ill,verbose;
+  int i,j,k,it,nit,ill,verbose;
   double lambda,up,down,mult,weight,err,newerr,derr,target_derr;
   double h[npar][npar],ch[npar][npar];
   double g[npar],d[npar],delta[npar],newpar[npar];
@@ -80,11 +80,11 @@ int levmarq(int npar, double *par, int ny, double *y, double *dysq,
       for (j=0; j<=i; j++)
     h[i][j] = 0;
     }
-    for (x=0; x<ny; x++) {
-      if (dysq) weight = 1/dysq[x]; /* for weighted least-squares */
-      grad(g, par, x, fdata);
+    for (k=0; k<ny; k++) {
+      if (dysq) weight = 1/dysq[k]; /* for weighted least-squares */
+      grad(g, par, k, fdata);
       for (i=0; i<npar; i++) {
-    d[i] += (y[x] - func(par, x, fdata))*g[i]*weight;
+    d[i] += (y[k] - func(par, k, fdata))*g[i]*weight;
     for (j=0; j<=i; j++)
       h[i][j] += g[i]*g[j]*weight;
       }
