@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		435BF5C125CA3353002DCFD2 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 435BF5C025CA3353002DCFD2 /* main.c */; };
 		435BF5CA25CA3380002DCFD2 /* lvmrq.c in Sources */ = {isa = PBXBuildFile; fileRef = 435BF5C925CA3380002DCFD2 /* lvmrq.c */; };
+		438C839525CAC4F7009EF4CC /* libblas.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 438C839425CAC4D6009EF4CC /* libblas.tbd */; };
+		438C839825CAC514009EF4CC /* liblapack.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 438C839725CAC507009EF4CC /* liblapack.tbd */; };
+		438C839C25CB5D14009EF4CC /* libclapack.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 438C839B25CB5D09009EF4CC /* libclapack.tbd */; };
+		438C839F25CB5D2D009EF4CC /* libcblas.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 438C839E25CB5D22009EF4CC /* libcblas.tbd */; };
+		438C83A225CB5D62009EF4CC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 438C83A125CB5D62009EF4CC /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +33,11 @@
 		435BF5C025CA3353002DCFD2 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		435BF5C825CA337F002DCFD2 /* lvmrq.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lvmrq.h; sourceTree = "<group>"; };
 		435BF5C925CA3380002DCFD2 /* lvmrq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lvmrq.c; sourceTree = "<group>"; };
+		438C839425CAC4D6009EF4CC /* libblas.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libblas.tbd; path = usr/lib/libblas.tbd; sourceTree = SDKROOT; };
+		438C839725CAC507009EF4CC /* liblapack.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = liblapack.tbd; path = usr/lib/liblapack.tbd; sourceTree = SDKROOT; };
+		438C839B25CB5D09009EF4CC /* libclapack.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libclapack.tbd; path = usr/lib/libclapack.tbd; sourceTree = SDKROOT; };
+		438C839E25CB5D22009EF4CC /* libcblas.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcblas.tbd; path = usr/lib/libcblas.tbd; sourceTree = SDKROOT; };
+		438C83A125CB5D62009EF4CC /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +45,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				438C839F25CB5D2D009EF4CC /* libcblas.tbd in Frameworks */,
+				438C839825CAC514009EF4CC /* liblapack.tbd in Frameworks */,
+				438C83A225CB5D62009EF4CC /* Accelerate.framework in Frameworks */,
+				438C839525CAC4F7009EF4CC /* libblas.tbd in Frameworks */,
+				438C839C25CB5D14009EF4CC /* libclapack.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +61,7 @@
 			children = (
 				435BF5BF25CA3353002DCFD2 /* Levenberg-Marquardt */,
 				435BF5BE25CA3353002DCFD2 /* Products */,
+				438C839325CAC4D5009EF4CC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -65,6 +81,18 @@
 				435BF5C925CA3380002DCFD2 /* lvmrq.c */,
 			);
 			path = "Levenberg-Marquardt";
+			sourceTree = "<group>";
+		};
+		438C839325CAC4D5009EF4CC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				438C83A125CB5D62009EF4CC /* Accelerate.framework */,
+				438C839E25CB5D22009EF4CC /* libcblas.tbd */,
+				438C839B25CB5D09009EF4CC /* libclapack.tbd */,
+				438C839725CAC507009EF4CC /* liblapack.tbd */,
+				438C839425CAC4D6009EF4CC /* libblas.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

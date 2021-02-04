@@ -17,6 +17,10 @@
 #include <stdio.h>
 #include <math.h>
 #include "lvmrq.h"
+//#include "cblas.h"
+//#include "clapack.h"
+#include <Accelerate/Accelerate.h>
+
 
 #define TOL 1e-30 /* smallest value allowed in cholesky_decomp() */
 
@@ -54,10 +58,10 @@ int levmarq(int npar, double *par, int ny, double *y, double *dysq,
         void (*grad)(double *, double *, int, void *),
         void *fdata, LMstat *lmstat)
 {
-  int i,j,k,it,nit,ill,verbose;
+    int i,j,k,it,nit,ill,verbose,info,NRHS;
   double lambda,up,down,mult,weight,err,newerr,derr,target_derr;
-  double h[npar][npar],ch[npar][npar];
-  double g[npar],d[npar],delta[npar],newpar[npar];
+  float h[npar*npar],ch[npar*npar],d[npar];
+  double g[npar],delta[npar],newpar[npar];
 
   verbose = lmstat->verbose;
   nit = lmstat->max_it;
@@ -67,6 +71,9 @@ int levmarq(int npar, double *par, int ny, double *y, double *dysq,
   target_derr = lmstat->target_derr;
   weight = 1;
   derr = newerr = 0; /* to avoid compiler warnings */
+  info = 0;
+  NRHS=1;
+
 
   /* calculate the initial error ("chi-squared") */
   err = error_func(par, ny, y, dysq, func, fdata);
@@ -78,7 +85,7 @@ int levmarq(int npar, double *par, int ny, double *y, double *dysq,
     for (i=0; i<npar; i++) {
       d[i] = 0;
       for (j=0; j<=i; j++)
-    h[i][j] = 0;
+    h[i*j] = 0;
     }
     for (k=0; k<ny; k++) {
       if (dysq) weight = 1/dysq[k]; /* for weighted least-squares */
@@ -86,7 +93,7 @@ int levmarq(int npar, double *par, int ny, double *y, double *dysq,
       for (i=0; i<npar; i++) {
     d[i] += (y[k] - func(par, k, fdata))*g[i]*weight;
     for (j=0; j<=i; j++)
-      h[i][j] += g[i]*g[j]*weight;
+      h[i*j] += g[i]*g[j]*weight;
       }
     }
 
@@ -96,12 +103,17 @@ int levmarq(int npar, double *par, int ny, double *y, double *dysq,
     ill = 1; /* ill-conditioned? */
     while (ill && (it<nit)) {
       for (i=0; i<npar; i++)
-    h[i][i] = h[i][i]*mult;
+    h[i*i] = h[i*i]*mult;
 
-      ill = cholesky_decomp(npar, ch, h);
+      //ill = cholesky_decomp(npar, ch, h);
 
       if (!ill) {
-    solve_axb_cholesky(npar, ch, delta, d);
+          //void solve_axb_cholesky(int n, double l[n][n], double x[n], double b[n])
+    //solve_axb_cholesky(npar, ch, delta, d);
+          /* Check LAPACK sposv reference
+           */
+          info = sposv_("Lower", &npar, &NRHS, h, &npar, d, &npar, &info);
+
     for (i=0; i<npar; i++)
       newpar[i] = par[i] + delta[i];
     newerr = error_func(newpar, ny, y, dysq, func, fdata);
@@ -154,12 +166,19 @@ double error_func(double *par, int ny, double *y, double *dysq,
    using the Cholesky decomposition A=LL^T.  The matrix L is passed in "l".
    Elements above the diagonal are ignored.
 */
+
+//only if you don't use Accelerate.framework
+
+/*
+
+
+
 void solve_axb_cholesky(int n, double l[n][n], double x[n], double b[n])
 {
   int i,j;
   double sum;
 
-  /* solve L*y = b for y (where x[] is used to store y) */
+  // solve L*y = b for y (where x[] is used to store y)
 
   for (i=0; i<n; i++) {
     sum = 0;
@@ -168,7 +187,7 @@ void solve_axb_cholesky(int n, double l[n][n], double x[n], double b[n])
     x[i] = (b[i] - sum)/l[i][i];
   }
 
-  /* solve L^T*x = y for x (where x[] is used to store both y and x) */
+  // solve L^T*x = y for x (where x[] is used to store both y and x)
 
   for (i=n-1; i>=0; i--) {
     sum = 0;
@@ -179,11 +198,13 @@ void solve_axb_cholesky(int n, double l[n][n], double x[n], double b[n])
 }
 
 
-/* This function takes a symmetric, positive-definite matrix "a" and returns
+/*
+ This function takes a symmetric, positive-definite matrix "a" and returns
    its (lower-triangular) Cholesky factor in "l".  Elements above the
    diagonal are neither used nor modified.  The same array may be passed
    as both l and a, in which case the decomposition is performed in place.
-*/
+
+ 
 int cholesky_decomp(int n, double l[n][n], double a[n][n])
 {
   int i,j,k;
@@ -201,8 +222,9 @@ int cholesky_decomp(int n, double l[n][n], double a[n][n])
     for (k=0; k<i; k++)
       sum += l[i][k] * l[i][k];
     sum = a[i][i] - sum;
-    if (sum<TOL) return 1; /* not positive-definite */
+    if (sum<TOL) return 1; // not positive-definite
     l[i][i] = sqrt(sum);
   }
   return 0;
 }
+*/
