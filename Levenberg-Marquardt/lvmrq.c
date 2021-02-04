@@ -11,7 +11,7 @@
  * specified by the C99 standard.
  *
  * Ron Babich, May 2008
- *
+ * modified Pablo Balmaceda Rescia
  */
 
 #include <stdio.h>
